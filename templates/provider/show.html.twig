@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provider{% endblock %}
+
+{% block body %}
+    <h1>Provider</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Prov_siren</th>
+                <td>{{ provider.provSiren }}</td>
+            </tr>
+            <tr>
+                <th>Prov_name</th>
+                <td>{{ provider.provName }}</td>
+            </tr>
+            <tr>
+                <th>Prov_mail</th>
+                <td>{{ provider.provMail }}</td>
+            </tr>
+            <tr>
+                <th>Prov_phone</th>
+                <td>{{ provider.provPhone }}</td>
+            </tr>
+            <tr>
+                <th>Prov_descr</th>
+                <td>{{ provider.provDescr }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('provider_index') }}">back to list</a>
+
+    <a href="{{ path('provider_edit', {'prov_siren': provider.prov_siren}) }}">edit</a>
+
+    {{ include('provider/_delete_form.html.twig') }}
+{% endblock %}

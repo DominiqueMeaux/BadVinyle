@@ -1,0 +1,20 @@
+<div class="container mt-4">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-5">{{ form_row(form.prod_name) }}</div>
+        <div class="col-md-2">{{ form_row(form.prod_price) }}</div>
+        <div class="col-md-2">{{ form_row(form.prod_stock) }}</div>
+        <div class="col-md-3">{{ form_row(form.prod_display) }}</div>   
+    </div>
+    <div class="row">
+        <div class="col-md-12">{{ form_row(form.prod_descr) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">{{ form_row(form.group) }}</div>
+        <div class="col-md-6">{{ form_row(form.category) }}</div>
+        <div class="col-md-6">{{ form_row(form.label) }}</div>
+    </div>
+   
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div>

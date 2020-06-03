@@ -1,0 +1,8 @@
+.cover {
+    width: 150px;
+    height: 120px;
+    object-fit: cover;
+    /*La propriété CSS object-fit définit la façon dont le contenu d'un élément remplacé
+       (<img> ou <video> par exemple) doit s'adapter à son conteneur en utilisant sa largeur et sa hauteur*/
+
+}

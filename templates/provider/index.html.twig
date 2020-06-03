@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provider index{% endblock %}
+
+{% block body %}
+    <h1>Liste des fournisseurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SIREN</th>
+                <th>Nom</th>
+                <th>Adresse mail</th>
+                <th>Téléphone</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for provider in providers %}
+            <tr>
+                <td>{{ provider.provSiren }}</td>
+                <td>{{ provider.provName }}</td>
+                <td>{{ provider.provMail }}</td>
+                <td>{{ provider.provPhone }}</td>
+                <td>{{ provider.provDescr }}</td>
+                <td>
+                    <a href="{{ path('provider_show', {'prov_siren': provider.prov_siren}) }}"><i class="fas fa-eye"></i></a>&nbsp;&nbsp;
+                    <a href="{{ path('provider_edit', {'prov_siren': provider.prov_siren}) }}"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('provider_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products index{% endblock %}
+
+{% block body %}
+    <h1>Products index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>mail</th>
+                <th>username</th>
+                <th>role</th>
+                <th>last name </th>
+                <th>first name</th>
+                <th>birthday</th>
+                <th>sexe</th>
+                <th>phone</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ user.getId() }}</td>
+                <td>{{ user.getEmail() }}</td>
+                <td>{{ user.getUsername() }}</td>
+                <td>{{ user.getRoles() }}</td>
+                <td>{{ user.getUserLastname() }}</td>
+                <td>{{ user.getUserFirstname() }}</td>
+                <td>{{ user.getUserBirthday() }}</td>
+                <td>{{ user.getUserSexe() }}</td>
+                <td>{{ user.getUserPhone() }}</td>
+                <td>
+                    <a href="{{ path('products_edit', {'prod_id': product.getId()}) }}"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('products_new') }}">Create new</a>
+{% endblock %}

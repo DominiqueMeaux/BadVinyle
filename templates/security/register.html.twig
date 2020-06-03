@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'enregistrer{% endblock %}
+
+{% block body %}
+<style>
+    form {
+        padding-left: 10px;
+    }
+</style>
+
+{{ form_start(form) }}
+{{ form_row(form.user_firstname) }}
+{{ form_row(form.user_lastname) }}
+{{ form_row(form.user_birthday) }}
+{{ form_row(form.user_phone) }}
+{{ form_row(form.user_sexe) }}
+{{ form_row(form.email) }}
+{{ form_row(form.password) }}
+<button type="submit" class="btn btn-primary">S'enregistrer</button>
+{{ form_end(form) }}
+<span class="ai-star-0"></span>
+<script>
+    $(document).ready(function () {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+{% endblock %}
