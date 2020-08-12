@@ -1,0 +1,40 @@
+<div class="col-12 col-lg-6 p-1">
+    <div class="card mb-3 mr-3">
+        {% if product.prodDisplay == 1 %}
+        <div class="row no-gutters align-items-center p-2">
+            <div class="col-12 col-md-4">
+                <img src="{{ asset('images/vinylfilrouge/' ~ product.Photo.photoId ~ '.' ~ product.Photo.photoFormat)}}"
+                    class="cover">
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <h3 class="card-title font-weight-bold">{{ product.prodName }}</h3>
+                    <div class="mb-3 font-weight-bold">Prix HT : {{ product.prodPrice }}€</div>
+                    <p class="card-text">
+                    <div class="mb-2">Groupe : {{ product.group.groupName }}</div>
+                    <div>Genre : {{ product.category.catLibelle }}</div>
+                    <div class="mb-3">{{ product.prodDescr }}</div>
+
+                    {% if product.prodStock == 0 %}
+                    <div>Produit Indisponible</div>
+                    {% else %}
+                    <div>Quantité disponible : {{ product.prodStock }}</div>
+                    {% endif %}
+                    </p>
+                    <div>
+                       
+                        {% if product.prodStock == 0 %}
+
+                        {% else %}
+                        <a href="{{ path('cart_add', {'id' : product.getId()}) }}"><i class="fas fa-cart-plus"></i></a>
+                        {% endif %}
+                    </div>
+                    {% else %}
+
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

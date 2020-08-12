@@ -19,12 +19,12 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('user_lastname', TextType::class, [
+        ->add('userLastname', TextType::class, [
             'label' => 'Nom : ', 'attr' => [
                 'class' => 'col-4'
             ]
         ])
-        ->add('user_firstname', TextType::class, [
+        ->add('userFirstname', TextType::class, [
             'label' => 'Prénom : ', 'attr' => [
                 'class' => 'col-4'
             ]
@@ -34,7 +34,7 @@ class RegisterType extends AbstractType
                 'class' => 'col-4'
             ]
         ])
-        ->add('user_sexe', ChoiceType::class, [
+        ->add('userSexe', ChoiceType::class, [
             'choices'  => [
                 'Homme' => 0,
                 'Femme' => 1,
@@ -43,12 +43,12 @@ class RegisterType extends AbstractType
                 'class' => 'col-1'
             ]
         ])
-        ->add('user_birthday', DateType::class, [
+        ->add('userBirthday', DateType::class, [
             'label' => 'Date de naissance', 'attr' => [
                 'class' => 'col-4 js-datepicker'
             ], 'widget' => 'single_text',
         ])
-        ->add('user_phone', TelType::class, [
+        ->add('userPhone', TelType::class, [
             'label' => 'Téléphone :', 'attr' => [
                 'class' => 'col-4'
             ]

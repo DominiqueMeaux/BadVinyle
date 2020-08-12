@@ -5,38 +5,28 @@
 {% block body %}
     <h1>Products</h1>
 
+    {% include 'products/_cardDetail.html.twig' with {product : product } only %}
+<hr>
     <table class="table">
+        <legend>Avis des clients</legend>
+        <thead>
+                <tr>
+                    <th>Note</th>
+                    <th>Commentaire</th>
+                </tr>
+        </thead>
         <tbody>
-            <tr>
-                <th>Prod_id</th>
-                <td>{{ product.getId() }}</td>
-            </tr>
-            <tr>
-                <th>Prod_name</th>
-                <td>{{ product.getProdName() }}</td>
-            </tr>
-            <tr>
-                <th>Prod_descr</th>
-                <td>{{ product.getProdDescr() }}</td>
-            </tr>
-            <tr>
-                <th>Prod_price</th>
-                <td>{{ product.getProdPrice() }}</td>
-            </tr>
-            <tr>
-                <th>Prod_display</th>
-                <td>{{ product.getProdDisplay() ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Prod_stock</th>
-                <td>{{ product.getProdStock() }}</td>
-            </tr>
+        {% for commentary in product.getCommentaries() %}
+        <tr>
+            <td> {{ commentary.commNote }}</td>
+            <td>{{ commentary.commComment }}</td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('products_index') }}">back to list</a>
+    <a href="{{ path('products') }}">back to list</a>
 
-    <a href="{{ path('products_edit', {'prod_id': product.getId()}) }}">edit</a>
 
-    {{ include('products/_delete_form.html.twig') }}
+
 {% endblock %}

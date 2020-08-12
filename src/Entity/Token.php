@@ -6,7 +6,7 @@ use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TokenRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\TokenRepository"))
  */
 class Token
 {
@@ -37,8 +37,10 @@ class Token
 
     public function __construct(User $user)
     {
+        
         $this->createdAt = new \DateTime();
         $this->user = $user;
+        $this->value = md5(uniqid());
     }
 
     public function getId(): ?int

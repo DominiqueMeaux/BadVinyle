@@ -9,12 +9,12 @@
     }
 </style>
 
-{{ form_start(form) }}
-{{ form_row(form.user_firstname) }}
-{{ form_row(form.user_lastname) }}
-{{ form_row(form.user_birthday) }}
-{{ form_row(form.user_phone) }}
-{{ form_row(form.user_sexe) }}
+{{ form_start(form, {'attr' : {'novalidate' : 'novalidate'}}) }}
+{{ form_row(form.userLastname) }}
+{{ form_row(form.userFirstname) }}
+{{ form_row(form.userBirthday) }}
+{{ form_row(form.userPhone) }}
+{{ form_row(form.userSexe) }}
 {{ form_row(form.email) }}
 {{ form_row(form.password) }}
 <button type="submit" class="btn btn-primary">S'enregistrer</button>

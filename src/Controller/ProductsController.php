@@ -2,29 +2,49 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Products;
 use App\Form\ProductsType;
+use App\Form\SearchType;
 use App\Repository\ProductsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/home")
+ * @Route("/products")
  */
 
 class ProductsController extends AbstractController
 {
     /**
-     * @Route("/home", name="home", methods={"GET"})
+     * @Route("/products", name="products", methods={"GET"})
      */
 
-    public function index(ProductsRepository $productsRepository): Response
+    public function index(ProductsRepository $productsRepository, Request $request): Response
     {
+        // Initialisation des données de recherches
+        $data = new searchData();
+        $data->page = $request->get('page', 1);
+        
+        //Création du formulaire avec la class SearchType avec en second paramètres les données
+        $form = $this->createForm(SearchType::class, $data);
+        // Gestion de la soumission du formulaire
+        $form->handleRequest($request);
+        $products = $productsRepository->findSearch($data);
+        
+    
+        // $products = $paginatorInterface->paginate(
+        //     $productsRepository->findAllWithPagination(), /* query NOT result */
+        //     $request->query->getInt('page', 1), /*page number*/
+        //     8 /*limit per page*/
+        //);
 
         return $this->render('products/index.html.twig', [
-            'products' => $productsRepository->findAll(),
+            'products' => $products,
+            'form' => $form->createView()
         ]);
     }
 
@@ -42,7 +62,7 @@ class ProductsController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('products');
         }
 
         return $this->render('products/new.html.twig', [
@@ -61,9 +81,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{prod_id}/edit", name="products_edit", methods={"GET","POST"})
-     */
+
     public function edit(Request $request, Products $product): Response
     {
         $form = $this->createForm(ProductsType::class, $product);
@@ -72,7 +90,7 @@ class ProductsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('products');
         }
 
         return $this->render('products/edit.html.twig', [
@@ -81,9 +99,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{prod_id}", name="products_delete", methods={"DELETE"})
-     */
+
     public function delete(Request $request, Products $product): Response
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
@@ -92,6 +108,6 @@ class ProductsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('products');
     }
 }

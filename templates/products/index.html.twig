@@ -3,42 +3,35 @@
 {% block title %}Products index{% endblock %}
 
 {% block body %}
-    <h1>Products index</h1>
+<h1 class="m-5">Vinyles</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix HT</th>
-                <th>Affiché </th>
-                <th>Stock</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td><img src="{{ asset('images/vinylfilrouge/' ~ product.Photo.getPhotoId() ~ '.' ~ product.Photo.getPhotoFormat())}}" class="cover"></td>
-                <td>{{ product.getProdName() }}</td>
-                <td>{{ product.getProdDescr() }}</td>
-                <td>{{ product.getProdPrice() }}€</td>
-                <td>{{ product.getProdDisplay() ? 'Oui' : 'Non' }}</td>
-                <td>{{ product.getProdStock() }}</td>
-                <td>
-                    <a href="{{ path('products_show', {'prod_id': product.getId()}) }}">view more<i class="fas fa-eye"></i></a>&nbsp;&nbsp;
-                    <a href="{{ path('products_edit', {'prod_id': product.getId()}) }}"><i class="fas fa-edit"></i></a>
-                    <a href="{{ path('cart_add', {'id' : product.getId()}) }}"><i class="fas fa-edit"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-3">
+        {% include 'products/_filter.html.twig' with {form:form} only %}
+    </div>
+    <div class="col-md-9">
 
-    <a href="{{ path('products_new') }}">Create new</a>
+        <div class="row no-gutters">
+            {% for product in products %}
+            {# include de card produit à laquelle on passe une liste de produits #}
+            {% include 'products/_card.html.twig' with {product : product } only %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{# display navigation #}
+<div class="navigation align-items-center">
+     {{ knp_pagination_render(products) }} 
+</div>
+
+
+
+
+
+
+
+
+
+
 {% endblock %}

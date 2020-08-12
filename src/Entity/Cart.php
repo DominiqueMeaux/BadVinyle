@@ -30,6 +30,11 @@ class Cart
     private $cart_create_date;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $totalItem;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Products::class, inversedBy="carts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="prod_id")
      */
@@ -40,6 +45,16 @@ class Cart
      * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $user;
+
+    public function getTotalItem()
+    {
+        return $this->totalItem;
+    }
+
+    public function setTotalItem($totalItem): void
+    {
+        $this->totalItem = $totalItem;
+    }
 
     public function getId(): ?int
     {

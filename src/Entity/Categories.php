@@ -67,7 +67,7 @@ class Categories {
     public function setCatUpperCat(int $cat_upper_cat): self {
         $this->cat_upper_cat = $cat_upper_cat;
 
-        return this;
+        return $this;
     }
 
     /**
@@ -99,6 +99,11 @@ class Categories {
         }
 
         return $this;
+    }
+    // Fonction pour récupérer une catégorie sous forme de chaîne de caractère
+    public function __toString()
+    {
+        return $this->cat_libelle;
     }
 
 }

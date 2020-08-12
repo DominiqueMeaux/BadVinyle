@@ -3,14 +3,21 @@
 namespace App\Entity;
 
 
+
 use App\Entity\UserInfo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ * fields={"email"},
+ * message="L'adresse mail est déjà utilisé."
+ * )
  */
 class User implements UserInterface
 {
@@ -23,6 +30,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
+     * @Assert\Regex(
+     *     pattern="/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/",
+     *     message="Votre adresse Email n'est pas valide."
+     * )
+     * 
      */
     private $email;
 
@@ -34,16 +47,38 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotNull,
+     * message="Entrer un mot de passe"
+     * @Assert\Regex(
+     *     pattern="/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/",
+     *     message="Votre mdp doit comporter au moins huit caractères, un chiffre et une majuscule."
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\Length(min=3, max=30, minMessage="Votre nom doit contenir au moins trois caractères"
+     * , maxMessage="Votre nom doit contenir moins de 30 caractères." )
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre nom ne peut pas contenir de chiffre."
+     * )
      */
     private $user_lastname;
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\Length(min=3, max=30, minMessage="Votre prénom doit contenir au moins trois caractères"
+     * , maxMessage="Votre prénom doit contenir moins de 30 caractères" )
+     * 
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre prénom ne peut pas contenir de chiffre."
+     * )
      */
     private $user_firstname;
 
@@ -59,6 +94,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\Regex(
+     *     pattern="/^0[1-9][0-9]{8}$/",
+     * 
+     *     message="Votre numéro utilise des caractères non valide."
+     * )
+     * 
+     * 
      */
     private $user_phone;
 
@@ -117,6 +159,9 @@ class User implements UserInterface
         $this->user_register_date = new \DateTime();
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getId(): ?int
     {
         return $this->user_id;

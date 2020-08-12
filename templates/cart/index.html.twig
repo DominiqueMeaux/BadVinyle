@@ -3,48 +3,60 @@
 {% block title %}panier{% endblock %}
 
 {% block body %}
-    <div class="bg-light p-3">
-        <h1>Votre panier</h1>
+ 
+
+
+<div class="card mt-5">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Shopping Cart</b></h4>
+                    </div>
+                    {# <div class="col align-self-center text-right text-muted">3 items</div> #}
+                </div>
+            </div>
+            <div class="row border-top border-bottom">
+                {% for item in items %}
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="{{ asset('images/vinylfilrouge/' ~ item.product.Photo.photoId ~ '.' ~ item.product.Photo.photoFormat)}}"></div>
+                    <div class="col">
+                        <div class="row text-muted">Vinyle</div>
+                        <div class="row">{{ item.product.prodName }}</div>
+                    </div>
+                    <div class="col">
+                    <div class="row text-muted">Prix</div>
+                    <div class="row">{{ item.product.prodPrice }} &euro;</div>
+                    </div>
+                    <div class="col"> <a href="#">-</a><a href="#" class="border">{{ item.quantity }}</a><a href="#">+</a> </div>
+                    <div class="col"> {{ item.product.prodPrice * item.quantity }} &euro; <a href="{{ path('cart_remove', {'id': item.product.getId()})}}"><span class="close">&#10005;</span></a></div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="back-to-shop"><a href="{{path("products")}}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div>
+                <h5><b>Récapitulatif</b></h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left:0;">ITEMS </div>
+                <div class="col text-right">{{ total }} &euro;</div>
+            </div>
+            <form>
+                <p>Livraison</p> <select>
+                    <option class="text-muted">-Standard- 5.00 &euro;</option>
+                </select>
+                
+            </form>
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div class="col">TOTAL PRICE</div>
+                <div class="col text-right"> {{ total }} &euro;</div>
+            </div> <a href="{{ path('commande') }}"><button class="btn">Commander</button></a>
+        </div>
     </div>
-{% if items | length > 0 %}
-    <table class="table">
-<thead>
-    <tr>
-        <th>Produit</th>
-        <th>Prix</th>
-        <th>Quantité</th>
-        <th>Total</th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-    {% for item in items %}
-        <tr>
-            <td>{{ item.product.getProdName() }}</td>
-            <td>{{ item.product.getProdPrice() }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.product.getProdPrice() * item.quantity }}</td>
-            <td>
-                <a href="{{ path('cart_remove', {'id': item.product.getId()})}}" class="btn btn-danger btn-sm">
-                   <i class="fa fa-trash" aria-hidden="true"></i>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</tbody>
-<tfoot>
-    <tr>
-        <td colspan="3" class="text-right"> Total : </td>
-        <td>{{ total }}</td>
-        <td></td>
-    </tr>
-</tfoot>
-
-    </table>
-{% else %}
-
-<p>Surprise, c'est vide !</p>
-{% endif %}
-
-
+</div>
 {% endblock %}

@@ -2,18 +2,22 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class UserController extends AbstractController
-{
+class UserController extends AbstractController {
+
     /**
      * @Route("/user", name="user")
      */
-    public function index()
-    {
+    public function index(UserRepository $userRepository) {
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+                    'user' => $userRepository->findAll(),
         ]);
     }
+
 }
